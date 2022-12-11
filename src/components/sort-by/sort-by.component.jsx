@@ -31,7 +31,9 @@ class SortBy extends Component {
                 container: (state) =>
                     state.isFocused ? 'mb-6 border-2 border-black transition-all duration-200' : 'transition-all duration-200 border border-black mb-6',
                 control: (state) =>
-                     'shadow-xl border-0 border-black hover:border-0',
+                    'shadow-xl border-0 border-black hover:border-0',
+                dropdownIndicator: (state) =>
+                state.isFocused ? 'transform transition-all duration-200 rotate-180' : 'transform transition-all duration-200'
 
             }}
                 onChange={onChangeHandler} options={options} />
