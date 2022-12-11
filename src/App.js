@@ -1,4 +1,7 @@
 import { Component } from 'react';
+import CardList from './components/card-list/card-list.component';
+import SearchBox from './components/search-box/search-box.component';
+import SortBy from './components/sort-by/sort-by.component';
 import './App.css';
 
 class App extends Component {
@@ -8,7 +11,8 @@ class App extends Component {
 
     this.state = {
       monsters: [],
-      searchField: ''
+      searchField: '',
+      sortMethod: 'name(a-z)'
     };
   }
 
@@ -20,9 +24,6 @@ class App extends Component {
       },
           () => { 
             console.log(this.state.monsters)
-            this.setState(() => {
-              return { filteredMonsters: users }
-            });
           }
         ));
   }
@@ -35,25 +36,39 @@ class App extends Component {
     );
   };
 
+  onSortChange = (event) => {
+    this.setState(() => {
+      return { sortMethod: event.value };
+    },
+      () => {
+        console.log(this.state.sortMethod)
+        this.setState({
+          monsters: this.state.monsters.sort((a, b) => {
+            if (this.state.sortMethod === 'name(a-z)') {
+              return a.name.localeCompare(b.name);
+            } else {
+              return b.name.localeCompare(a.name);
+            }
+          })
+        })
+      }
+    );
+  };
+
   render() {
 
     const { monsters, searchField } = this.state;
     const { onSearchChange } = this;
+    const { onSortChange } = this;
     const filteredMonsters = monsters.filter((monster) => {
       return monster.name.toLowerCase().includes(searchField.toLowerCase());
     });
 
   return (
-    <div className="App">
-      <input
-        className='search-box px-2'
-        type="search"
-        placeholder="search monsters"
-        onChange={onSearchChange} />
-      
-      {filteredMonsters.map((monster) => { 
-        return <h1 key={monster.id}>{monster.name}</h1>
-      }) }
+    <div className="App mx-auto h-full px-4 lg:px-8 xl:px-24 pb-8 flex flex-col justify-center items-center">
+      <SearchBox onChangeHandler={onSearchChange} className="search-box pl-4 pr-8 my-12 border w-full outline-none transition-all duration-200 focus:rounded-none focus:translate-y-2 focus:shadow-2xl max-w-xs shadow-md border-black rounded-xl py-3" placeholder="search monsters" />
+      <SortBy onChangeHandler={onSortChange} className="sort-by pl-4 pr-8 my-12 border w-full outline-none transition-all duration-200 focus:rounded-none focus:translate-y-2 focus:shadow-2xl max-w-xs shadow-md border-black rounded-xl py-3" />
+      <CardList monsters={filteredMonsters} className="flex flex-wrap justify-start mx-auto w-full" />
     </div>
     );
   };

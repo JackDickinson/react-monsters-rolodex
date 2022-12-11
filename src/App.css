@@ -2,41 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-.App {
-  text-align: center;
+body {
+    @apply bg-green-200;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.card-item {
+    @apply flex flex-col flex-wrap items-center w-full sm:w-[calc(50%-1.5rem)] md:w-[calc(33%-1.5rem)] xl:w-[calc(25%-1.5rem)] bg-gradient-to-r from-cyan-500 to-blue-500 px-4 pt-2 pb-8 rounded-lg m-3;
+    
+}
+.card-item *:not(:last-child) {
+    @apply pb-5;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
